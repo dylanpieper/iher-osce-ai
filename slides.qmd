@@ -1,0 +1,255 @@
+---
+title: "Assessing LLM-Generated Feedback for OSCEs at UW-Madison"
+subtitle: "IHER Conference"
+author: "Dylan Pieper, MA, Research Analyst"
+date: 2026-09-15
+date-format: long
+format:
+  revealjs:
+    theme: [default, styles.scss]
+    slide-number: true
+    output-file: index.html
+    incremental: true
+    code-line-numbers: true
+    code-overflow: wrap
+    fig-align: center
+    auto-animate-duration: 0.6
+    auto-animate-easing: cubic-bezier(0.22, 1, 0.36, 1)
+    # footer: '<a href="https://github.com/dylanpieper/iher-osce-ai">github.com/dylanpieper/iher-osce-ai</a>'
+---
+
+## {background-image="img/human-ai-exams.png" background-size="contain"}
+
+<div class="quote-overlay">
+<p class="quote fragment fade-in-then-out">Excellent job.</p>
+<p class="quote fragment fade-in-then-out">Excellent clinical reasoning. Explain your thought process in plain terms to the patient.</p>
+<p class="quote fragment">Your clinical reasoning was excellent based on the way you approached history taking to discover the three plausible differential diagnoses. However, I did not hear you spend enough time discussing your reasoning to your patient in plain terms, which can help reduce their anxiety and improve their compliance with testing and treatment. Continue to refine your communication skills by practicing...</p>
+</div>
+
+## Background {auto-animate="true"}
+
+
+<div class="approach-lead">How to define &ldquo;good&rdquo; LLM feedback</div>
+
+<div class="approach-row">
+
+<div class="approach fragment">
+  <span class="num">1</span>
+  <span class="approach-title">Align with faculty</span>
+  <span class="approach-note">Prompt and rate LLMs for feedback that closely matches what faculty wrote.</span>
+  <span class="cite">(Shakur et al., 2024; R&uuml;dian et al., 2025)</span>
+</div>
+
+<div class="approach chosen fragment">
+  <span class="tag">Our research</span>
+  <span class="num">2</span>
+  <span class="approach-title">Align with pedagogy</span>
+  <span class="approach-note">Prompt and rate LLMs for feedback that aligns with best assessment practices and feedback science. Rate faculty feedback independently.</span>
+  <span class="cite">(Dai et al., 2024; Hattie &amp; Timperley, 2007; K&#x131;yak et al., 2026)</span>
+</div>
+
+</div>
+
+## OSCE Rubric {auto-animate="true"}
+
+
+<div class="approach-lead">How to assess students</div>
+
+<div class="approach-row">
+
+<div class="approach fragment">
+<span class="num wide">38</span>
+<span class="approach-title">Checkboxes</span>
+<span class="approach-note">Done or Not Done, from <span class="hl">washing hands</span> to <span class="hl">listening to both lungs</span> to the <span class="hl">teach-back</span>. They average into a score and decile.</span>
+</div>
+
+<div class="approach fragment">
+<span class="num wide">4</span>
+<span class="approach-title">Global ratings</span>
+<span class="approach-note"><span class="hl">History</span>, <span class="hl">physical exam</span>, <span class="hl">clinical reasoning</span>, and <span class="hl">communication</span> &mdash; each judged against expectations for this level of training.</span>
+</div>
+
+<div class="approach fragment">
+<span class="num wide">1</span>
+<span class="approach-title">Paragraph of formative feedback</span>
+<span class="approach-note">A short <span class="hl">written comment </span>about the student's performance.</span>
+</div>
+
+</div>
+
+## Quality of Feedback Rubric {auto-animate="true"}
+
+
+<div class="approach-lead">How to assess feedback</div>
+
+<div class="quad">
+
+<div class="approach fragment">
+<span class="approach-title">Specific</span>
+<span class="approach-note">Names the behavior and the <span class="hl">gap</span> between current and expected performance</span>
+<span class="cite">(Hattie &amp; Timperley, 2007; Wisniewski et al., 2020)</span>
+</div>
+
+<div class="approach fragment">
+<span class="approach-title">Constructive</span>
+<span class="approach-note">Gives the student something <span class="hl">actionable</span> to do next time</span>
+<span class="cite">(Hattie &amp; Timperley, 2007; Lefroy et al., 2015)</span>
+</div>
+
+<div class="approach fragment">
+<span class="approach-title">Balanced</span>
+<span class="approach-note">Covers <span class="hl">strengths and gaps</span>, not only what went wrong</span>
+<span class="cite">(Lefroy et al., 2015)</span>
+</div>
+
+<div class="approach fragment">
+<span class="approach-title">Behavioral</span>
+<span class="approach-note">Describes <span class="hl">observed actions</span>, not personal attributes</span>
+<span class="cite">(Ende, 1983; Alsahafi et al., 2023)</span>
+</div>
+
+<div class="approach gate fragment">
+<span class="approach-title">Accurate</span>
+<span class="approach-note">LLM feedback shows <span class="hl">variable accuracy</span>. A confident wrong claim can <span class="hl">harm learning or care</span>.</span>
+<span class="cite">(K&#x131;yak et al., 2026)</span>
+</div>
+
+</div>
+
+## Feedback Generation {auto-animate="true"}
+
+
+<div class="approach-lead">Role-based, zero-shot prompting</div>
+
+<div class="foot-note">Processed in Python via Whisper and generated in R via Azure AI Foundry (ZDR) with Claude Opus 4.8</div>
+
+<div class="flow fragment semi-fade-out" data-fragment-index="1">
+<div class="flow-step">
+<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="13" height="12" rx="2.5"/><path d="M15.5 11l6-3.5v9l-6-3.5z"/></svg>
+<span class="flow-label">OSCE video</span>
+</div>
+<div class="flow-arrow">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg>
+</div>
+<div class="flow-step">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4M8 6v12M12 3v18M16 7v10M20 10v4"/></svg>
+<span class="flow-label">Audio</span>
+</div>
+<div class="flow-arrow">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg>
+</div>
+<div class="flow-step">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v4h4"/><path d="M8.5 9.5h3M8.5 13h7M8.5 16.5h7"/></svg>
+<span class="flow-label">Transcript</span>
+</div>
+</div>
+
+<div class="approach-row">
+
+<div class="approach fragment" data-fragment-index="1">
+<span class="num wide">V0</span>
+<span class="approach-title">No case context</span>
+<span class="approach-note"><span class="hl">Role</span>, <span class="hl">task</span>, inference guardrails, and feedback rules &mdash; nothing about the case itself.</span>
+</div>
+
+<div class="approach fragment" data-fragment-index="2">
+<span class="num wide">V1</span>
+<span class="approach-title">Generic reasoning</span>
+<span class="approach-note">Adds the <span class="hl">case context</span> and a <span class="hl">general</span> clinical reasoning scaffold.</span>
+</div>
+
+<div class="approach fragment" data-fragment-index="3">
+<span class="num wide">V2</span>
+<span class="approach-title">Case-specific reasoning</span>
+<span class="approach-note">Adds a <span class="hl">case-specific</span> reasoning scaffold with the expected <span class="hl">differentials</span>.</span>
+</div>
+
+</div>
+
+## Rating Design {auto-animate="true"}
+
+<div class="approach-lead">How the feedback was rated</div>
+
+<div class="foot-note">Pilot to test the workflow and the instrument before scaling to 130 transcripts</div>
+
+<div class="approach-row">
+
+<div class="approach fragment">
+<span class="num wide">5</span>
+<span class="approach-title">Blinded raters</span>
+<span class="approach-note">Faculty/staff rate each comment <span class="hl">without knowing</span> whether an LLM or a colleague wrote it.</span>
+</div>
+
+<div class="approach fragment">
+<span class="num wide">4</span>
+<span class="approach-title">Conditions</span>
+<span class="approach-note">The three prompt versions &mdash; <span class="hl">V0</span>, <span class="hl">V1</span>, <span class="hl">V2</span> &mdash; and <span class="hl">faculty feedback</span>.</span>
+</div>
+
+<div class="approach fragment">
+<span class="num wide">25</span>
+<span class="approach-title">Pilot ratings</span>
+<span class="approach-note"><span class="hl">5 transcripts</span> stratified across deciles &times; <span class="hl">5 raters</span>.</span>
+</div>
+
+</div>
+
+::: {.matrix .fragment}
+| Transcript | Rater 1 | Rater 2 | Rater 3 | Rater 4 | Rater 5 |
+|---|---|---|---|---|---|
+| T1 | V0 | V1 | V2 | FF | V2 |
+| T2 | V1 | V2 | FF | V0 | V0 |
+| T3 | V2 | FF | V0 | V1 | V2 |
+| T4 | FF | V0 | V1 | V2 | V1 |
+| T5 | V1 | V0 | V2 | FF | V1 |
+
+: {tbl-colwidths="[20,16,16,16,16,16]"}
+
+[Counterbalanced across raters, so one condition repeats per transcript. FF = faculty feedback.]{.cite}
+:::
+
+## Review Example {auto-animate="true" data-footer="false"}
+
+
+<iframe src="review_example.html" style="width:100%; height:75vh; border:1px solid #ccc;"></iframe>
+
+## Results {auto-animate="true"}
+
+![](img/score_density.jpg)
+
+## Conclusions and Future Directions {auto-animate="true"}
+
+<div class="approach-lead">What comes next</div>
+
+<div class="approach-row">
+
+<div class="approach fragment">
+<span class="num wide">1</span>
+<span class="approach-title">Polish the output</span>
+<span class="approach-note">A second pass for <span class="hl">accuracy</span></span>
+</div>
+
+<div class="approach fragment">
+<span class="num wide">2</span>
+<span class="approach-title">Full review</span>
+<span class="approach-note">Scale the rating to all <span class="hl">130 transcripts</span>, analyze <span class="hl">feedback quality</span> across conditions, and estimate <span class="hl">inter-rater reliability</span>.</span>
+</div>
+
+<div class="approach fragment">
+<span class="num wide">3</span>
+<span class="approach-title">Prospective study</span>
+<span class="approach-note">Students <span class="hl">rate the feedback</span>, report their <span class="hl">attitudes and trust in AI</span>, and write a <span class="hl">learning plan</span>.</span>
+</div>
+
+</div>
+
+<div class="approach thanks fragment" data-id="thanks">
+<span class="approach-title" data-id="thanks-text">Thank you!</span>
+</div>
+
+## {.thanks-slide auto-animate="true"}
+
+<div class="approach thanks thanks-full" data-id="thanks">
+<span class="approach-title" data-id="thanks-text">Thank you!</span>
+</div>
+

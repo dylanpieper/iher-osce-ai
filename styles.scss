@@ -1,0 +1,483 @@
+/*-- scss:defaults --*/
+
+// UW-Madison brand — https://brand.wisc.edu
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700;900&family=Red+Hat+Text:wght@400;500;700&display=swap');
+
+$presentation-heading-font: "Red Hat Display", sans-serif;
+$font-family-sans-serif: "Red Hat Text", sans-serif;
+
+$badger-red: #C5050C;
+$dark-red: #9B0000;
+$light-gray: #E1E5E7;
+$near-black: #121212;
+
+$body-bg: #FAF6EE;
+$body-color: $near-black;
+$presentation-heading-color: $badger-red;
+$link-color: $dark-red;
+$code-color: $dark-red;
+$selection-bg: $badger-red;
+
+$presentation-font-size-root: 38px;
+$presentation-h1-font-size: 60px;
+$presentation-h2-font-size: 44px;
+$code-block-font-size: 0.85em;
+
+/*-- scss:rules --*/
+
+// Real generated cover page
+#title-slide .subtitle {
+  border-bottom: 4px solid $badger-red;
+  padding-bottom: 0.3em;
+  display: inline-block;
+}
+
+.reveal .slides section blockquote {
+  border-left: 4px solid $badger-red;
+  background-color: $light-gray;
+}
+
+.reveal .slides section .cite {
+  display: block;
+  font-size: 0.7em;
+  color: #b3b3b3;
+}
+
+.reveal .slides section .fragment.current-fragment .cite {
+  color: $dark-red;
+}
+
+.reveal .slides section .accent {
+  color: #b3b3b3;
+  font-weight: 700;
+}
+
+.reveal .slides section .fragment.current-fragment .accent {
+  color: $dark-red;
+}
+
+// Highlight-last incremental list: dim all revealed items via color (not
+// opacity — reveal.js's own .fragment.visible{opacity:1} wins that fight),
+// snap the most-recently-revealed one to solid black.
+.highlight-last {
+  color: #b3b3b3;
+
+  .current-fragment {
+    color: $near-black;
+  }
+}
+
+// Approach panel: the two ways the literature (and this study) frame what
+// "good" LLM feedback means, as a side-by-side pair. Flat rounded panels with a
+// numbered chip, in a deeper cream than the slide ground so black body text
+// stays the readable layer. The approach this
+// work takes is marked with a badger-red edge and title, not a red fill, so it
+// reads as chosen without costing contrast. Raw HTML in the .qmd because
+// nested fenced divs collapse into one paragraph.
+$panel-bg: #E3DAC8;
+$panel-bg-chosen: #DCD1BA;
+
+.reveal .slides section {
+
+  .approach-lead {
+    font-family: $presentation-heading-font;
+    font-size: 0.6em;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $near-black;
+    margin-bottom: 0.8em;
+  }
+
+  .approach-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0.6em;
+  }
+
+  .approach {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 0.7em 0.85em 0.75em;
+    border-radius: 14px;
+    background: $panel-bg;
+    color: $near-black;
+  }
+
+  // Pandoc wraps the card's spans in a <p>, so the card's flex column has one
+  // child. Make that <p> the column instead, or margin-top:auto on .cite has
+  // no flex parent to push against and the citations stop bottom-aligning.
+  .approach>p {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    width: 100%;
+    margin: 0;
+  }
+
+  .approach .num {
+    align-self: flex-start;
+    width: 1.7em;
+    height: 1.7em;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $presentation-heading-font;
+    font-size: 0.68em;
+    font-weight: 900;
+    color: #FFFFFF;
+    background: #6f6a5f;
+    margin-bottom: 0.5em;
+  }
+
+  .approach .approach-title {
+    display: block;
+    font-family: $presentation-heading-font;
+    font-size: 0.72em;
+    font-weight: 700;
+    line-height: 1.2;
+    color: $near-black;
+  }
+
+  .approach .approach-note {
+    display: block;
+    font-size: 0.55em;
+    line-height: 1.4;
+    color: $near-black;
+    margin-top: 0.35em;
+  }
+
+  .approach .cite {
+    font-size: 0.46em;
+    color: #6f6a5f;
+    margin-top: auto;
+    padding-top: 0.7em;
+  }
+
+  // The chosen approach: a badger-red edge and heading rather than a red fill,
+  // so the body copy stays black on cream.
+  .approach.chosen {
+    background: $panel-bg-chosen;
+    box-shadow: inset 0 0 0 2px $badger-red;
+
+    .num {
+      background: $badger-red;
+    }
+
+    .approach-title {
+      color: $badger-red;
+    }
+  }
+
+  // Highlight-last, card edition: the deck-wide .fragment.current-fragment
+  // rules recolor .cite only, which made the citation dim while its card
+  // stayed lit. Dim the whole slab instead via filter — reveal.js owns
+  // .fragment.visible{opacity:1}, so opacity is not ours to set — and pin the
+  // cite's color so the inherited current-fragment rule stops acting alone.
+  //
+  // Applies to every card idiom — row and quad alike — so a card build reads
+  // the same everywhere in the deck.
+  .approach.fragment.visible {
+    filter: opacity(0.45);
+    transition: filter 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .approach.fragment.current-fragment {
+    filter: none;
+  }
+
+  .approach.fragment.current-fragment .cite {
+    color: #6f6a5f;
+  }
+
+  .approach .tag {
+    position: absolute;
+    top: 0.7em;
+    right: 0.85em;
+    padding: 0.3em 0.75em;
+    border-radius: 999px;
+    font-family: $presentation-heading-font;
+    font-size: 0.4em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: $badger-red;
+    color: #FFFFFF;
+  }
+}
+
+// OSCE checklist slide: three beats of what a rater leaves behind, told with
+// the approach-panel cards. Only two additions are needed — a pill-shaped
+// number chip, since "1–3" will not fit a circle, and the closing line.
+.reveal .slides section {
+
+  .approach .num.wide {
+    width: auto;
+    min-width: 1.7em;
+    padding: 0 0.55em;
+    border-radius: 999px;
+  }
+
+  // Feedback-quality rubric: four domains as a 2x2 of the same cards. A grid
+  // rather than a row of four, so each domain keeps a readable measure at this
+  // slide width.
+  .quad {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5em;
+  }
+
+  // Accuracy is a peer card in form but not in kind: the other four come from
+  // feedback pedagogy, this one from the LLM literature. A red-tinted panel
+  // spanning the full grid width marks the difference without demoting it.
+  .approach.gate {
+    grid-column: 1 / -1;
+    background: #F2DEDC;
+
+    .approach-title {
+      color: $badger-red;
+    }
+  }
+
+  // Platform / model provenance. Rides directly under the subheading as part
+  // of the slide's standing context — true before the first card lands — and
+  // is not a fragment. The negative top margin closes the subheading's own
+  // bottom gap so the two read as one header block.
+  .foot-note {
+    margin: -0.5em 0 0.9em;
+    font-size: 0.5em;
+    line-height: 1.4;
+    color: $near-black;
+  }
+
+  // Input pipeline shown above the prompt-condition cards: the one thing that
+  // does not vary between conditions. Deliberately lighter than an .approach
+  // card — same cream slab and radius, but icon-over-label and no fragment, so
+  // it reads as standing context rather than another beat in the build.
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-bottom: 1.1em;
+    transition: filter 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  // Standing context, not a build beat: on screen from the start, dimming on the
+  // same step that reveals V0 via a shared data-fragment-index. Reveal's own
+  // semi-fade-out lands on opacity 0.5, which reads lighter than the .approach
+  // cards beside it — restate the dim as the cards' filter so both match.
+  .flow.fragment.semi-fade-out.visible {
+    opacity: 1;
+    filter: opacity(0.45);
+  }
+
+  .flow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3em;
+    min-width: 5.4em;
+    padding: 0.6em 0.75em 0.5em;
+    border-radius: 12px;
+    background: $panel-bg;
+    color: $near-black;
+  }
+
+  .flow-step svg {
+    width: 1.6em;
+    height: 1.6em;
+  }
+
+  .flow-label {
+    font-family: $presentation-heading-font;
+    font-size: 0.44em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    color: #9a948a;
+  }
+
+  .flow-arrow svg {
+    width: 1.15em;
+    height: 1.15em;
+  }
+
+  // Icons are stroke-only line art so they inherit the panel's text color and
+  // stay legible at this size; fill would turn them into blobs.
+  .flow svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  // Counterbalancing matrix under the rating cards. Small enough to read as
+  // evidence for the third card rather than a table slide of its own, so it is
+  // sized down here instead of putting .smaller on the whole slide — that would
+  // shrink the cards too and break parity with the other card slides.
+  .matrix {
+    margin-top: 1em;
+    font-size: 0.5em;
+
+    table {
+      margin: 0;
+      width: 100%;
+    }
+
+    th,
+    td {
+      padding: 0.25em 0.4em;
+      text-align: center;
+      border-color: rgba(111, 106, 95, 0.25);
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+      font-weight: 700;
+    }
+
+    // Match the subheading note: .matrix already scales to 0.5em, so 1em here
+    // lands at the same rendered size as .foot-note rather than compounding
+    // the deck-wide .cite reduction on top of it.
+    .cite {
+      margin-top: 0.7em;
+      font-size: 1em;
+      line-height: 1.4;
+      color: $near-black;
+    }
+  }
+
+  // Closing card, full width under the three future-directions cards. Same slab
+  // and red edge as .approach.chosen, but sized as a sign-off rather than a
+  // beat: one big centered line, no number chip, no note.
+  .approach.thanks {
+    margin-top: 0.6em;
+    padding: 0.55em 0.85em;
+    text-align: center;
+    background: $panel-bg-chosen;
+    box-shadow: inset 0 0 0 2px $badger-red;
+
+    .approach-title {
+      font-family: $presentation-heading-font;
+      font-size: 1.5em;
+      font-weight: 900;
+      letter-spacing: 0.01em;
+      color: $badger-red;
+    }
+  }
+
+  // The closing card again, alone on its own auto-animate slide. Same data-id
+  // as the card on the previous slide, so reveal tweens the slab from a strip
+  // under the three cards up to the full slide, growing the type with it. The
+  // heading is empty on that slide and would otherwise reserve a band of space
+  // above the card, so it is removed from flow here rather than left blank.
+  &.thanks-slide h2 {
+    display: none;
+  }
+
+  // Sized in canvas pixels, not vh: the deck is a fixed 1050x700 stage that
+  // reveal scales to the window, so a vh height is measured against the real
+  // viewport and then scaled again — on a tall window that ran the card off the
+  // bottom of the frame. 560px of the 700px stage leaves a clear band under the
+  // card for the footer and slide number.
+  .approach.thanks.thanks-full {
+    margin: 20px 0 0;
+    height: 560px;
+    padding: 0;
+    border-radius: 22px;
+    justify-content: center;
+
+    >p {
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+
+    .approach-title {
+      font-size: 3.6em;
+    }
+  }
+
+  // Inline emphasis inside a card — domain names, checklist examples. Its own
+  // class rather than the deck's .accent, which is gray until its fragment is
+  // current; these should read as named things at all times, not as a reveal
+  // state.
+  .hl {
+    font-weight: 700;
+    color: $badger-red;
+  }
+}
+
+// Quote overlay on the opening image slide: three faculty-feedback quotes,
+// one click each, stacked in the same spot so the longer third quote can
+// replace the short first two rather than piling up. fade-in-then-out on the
+// first two hides each as the next lands; the last stays put as the close.
+.reveal .slides section {
+
+  .quote-overlay {
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    bottom: 6%;
+  }
+
+  .quote-overlay .quote {
+    position: absolute;
+    inset: auto 0 0 0;
+    margin: 0;
+    padding: 0.7em 1em;
+    border-radius: 14px;
+    background: rgba(250, 246, 238, 0.92);
+    box-shadow: inset 0 0 0 2px $badger-red;
+    font-family: $presentation-heading-font;
+    font-style: italic;
+    font-size: 0.55em;
+    line-height: 1.4;
+    color: $near-black;
+  }
+}
+
+// Deck footer: the repo URL, on every slide. Read as chrome, not content —
+// anchored bottom-left to balance the slide number bottom-right, and muted so
+// it never competes with the cards above it. Quarto's footer.css loads after
+// the theme and would win on equal specificity, so these selectors qualify
+// with the element name to outrank it; that file centers the footer across the
+// full width, which is what the left/right/width reset here undoes.
+.reveal div.footer {
+  // 54px clears the menu button parked at left:8px — the same offset quarto
+  // uses for .slide-chalkboard-buttons.slide-menu-offset.
+  left: 54px;
+  right: auto;
+  bottom: 12px;
+  width: auto;
+  margin: 0;
+  text-align: left;
+  font-family: $font-family-sans-serif;
+  font-size: 18px;
+  color: #6f6a5f;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(111, 106, 95, 0.35);
+    padding-bottom: 1px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  a:hover {
+    color: $badger-red;
+    border-bottom-color: $badger-red;
+  }
+}

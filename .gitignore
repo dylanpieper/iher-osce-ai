@@ -1,0 +1,31 @@
+# Quarto
+/.quarto/
+/_site/
+
+# Rendered output (built in CI, see .github/workflows/publish.yml)
+/slides.html
+/slides_files/
+*_cache/
+/_freeze/
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# Env / secrets
+.Renviron
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+**/*.quarto_ipynb
