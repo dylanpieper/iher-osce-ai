@@ -9,6 +9,7 @@ format:
     theme: [default, styles.scss]
     slide-number: true
     output-file: index.html
+    embed-resources: true
     incremental: true
     code-line-numbers: true
     code-overflow: wrap
@@ -211,7 +212,7 @@ format:
 ## Review Example {auto-animate="true" data-footer="false"}
 
 
-<iframe src="review_example.html" style="width:100%; height:75vh; border:1px solid #ccc;"></iframe>
+<iframe srcdoc-file="review_example.html" style="width:100%; height:75vh; border:1px solid #ccc;"></iframe>
 
 ## Results {auto-animate="true"}
 

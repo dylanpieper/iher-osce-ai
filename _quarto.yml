@@ -3,3 +3,9 @@ project:
   output-dir: _site
   render:
     - slides.qmd
+  # index.html embeds every asset, so the copied originals are dead weight
+  post-render:
+    - rm -rf _site/img
+
+filters:
+  - srcdoc.lua
